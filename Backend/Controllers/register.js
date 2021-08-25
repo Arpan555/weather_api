@@ -8,18 +8,16 @@ const signup = async (req, res) => {
 const {name, email, city,password } = req.body;
 try {
      const oldUser = await register.findOne({ email });
-
-        if (oldUser) {
+     if (oldUser) {
           return res.status(400).json({ message: "User already exists" });
         }
     const hashedPassword = await bcrypt.hash(password, 12);
     const result = await register.create({name, email,city ,password: hashedPassword  });
     const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
     res.status(201).json({ result, token });
-  } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
-
-  }
+    }catch (error) {
+     res.status(500).json({ message: "Something went wrong" });
+}
 };
 
 const signin = async (req, res) => {
@@ -30,21 +28,19 @@ const signin = async (req, res) => {
     try {
         const oldUser = await register.findOne({ email });
   
-      if (!oldUser) {
-          return res.status(404).json({ message: "User doesn't exist" });
-      }
+        if (!oldUser) {
+            return res.status(404).json({ message: "User doesn't exist" });
+        }
       const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
   
       if (!isPasswordCorrect) {
           return res.status(400).json({ message: "Invalid credentials" });
       }
       const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "1h" });
-      const log=new Log({
-        email,date,time
-      })
+      const log=new Log({email,date,time})
       await log.save()
       res.status(200).json({ result: oldUser, token });
-    } catch (err) {
+    }catch (err) {
       res.status(500).json({ message: "Something went wrong" });
     }
   };

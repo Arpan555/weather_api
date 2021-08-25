@@ -1,5 +1,5 @@
 import axios from "axios"
-import {signup,login} from "./Redux/Actions/actions"
+import {signup,login,fetchweather,fetchbylonlat,history} from "./Redux/Actions/actions"
 const request=axios.create({
     baseURL:"http://localhost:8000",
 })
@@ -7,13 +7,10 @@ const request=axios.create({
 export const requestsignup=(state)=>{
     return async(dispatch)=>{
         try{
-            console.log(state)
             const signupData= await request.post("/signup",state)
-            console.log(signupData.data)
             dispatch(signup(signupData.data));
-            
-
-        }catch(err){
+        }catch(err)
+        {
             console.log(err);
         }
     }
@@ -22,14 +19,52 @@ export const requestsignup=(state)=>{
 export const requestlogin=(state)=>{
     return async(dispatch)=>{
         try{
-            console.log(state)
             const loginData= await request.post("/login",state)
-            console.log(loginData.data)
             dispatch(login(loginData.data));
         
-            
-        }catch(err){
+        }catch(err)
+        {
             console.log(err);
         }
+    }
+}
+
+export const requestcity=(state)=>{
+    return async(dispatch)=>{
+        const {city,name}=state
+        try {
+            const fetchData= await request.get(`/data?q=${city}&name=${name}`)
+            dispatch(fetchweather(fetchData.data));
+        } catch (error) 
+        {
+            console.log(error)    
+        }
+    }
+}   
+
+export const requestcurrentlocation=(state)=>{
+    return async(dispatch)=>{
+        const {latitude,longitude}=state
+        try {
+            const fetchDataByLL= await request.get(`/curdata?lon=${longitude}&lat=${latitude}`)
+            dispatch(fetchbylonlat(fetchDataByLL.data));
+    
+        } catch (error) 
+        {
+            console.log(error)    
+        }
+    }
+}
+
+export const requesthistory=(state)=>{
+    return async(dispatch)=>{
+        try{
+            const historyData=await request.get("/history",state)
+            dispatch(history(historyData.data))
+        }catch(error)
+        {
+            console.log(error)
+        }
+            
     }
 }

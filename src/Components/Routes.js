@@ -10,11 +10,10 @@ import {
 import Dashboard from "./Dashboard";
 import Login from "./Login";
 import Signup from "./Signup"
+import History from "./History"
 
 const PrivateRoute = (props) => {
   const { token } = useSelector((state)=>state.reducer)
-  console.log("authLogin", token);
-
   return token ? (
     <Route {...props} />
   ) : (
@@ -22,29 +21,28 @@ const PrivateRoute = (props) => {
 
 function Routes() {
     const { token } = useSelector((state)=>state.reducer)
-
-
-  return (
+return (
     <BrowserRouter>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        {!token && (
+        <ul>
           <li>
-            <Link to="/login">Login</Link>
+            <Link to="/">Home</Link>
           </li>
-        )}
-        <li>
-          <Link to="/dashboard">Dashboard</Link>
-        </li>
+          {!token && (
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          )}
+          <li>
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
 
-      </ul>
-      <Switch>
-        <PrivateRoute path="/dashboard" component={Dashboard} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup"component={Signup}/>
-        <Route path="/">Home</Route>
+        </ul>
+        <Switch>
+          <PrivateRoute path="/dashboard" component={Dashboard} />
+          <PrivateRoute path="/history" component={History} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup"component={Signup}/>
+          <Route path="/">Home</Route>
         </Switch>
     </BrowserRouter>
   );

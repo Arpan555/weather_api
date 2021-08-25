@@ -1,18 +1,21 @@
-import { SIGN_UP,LOGIN,LOGOUT } from "../Actions/index";
+import { SIGN_UP,LOGIN,LOGOUT,FETCH_WEATHER,FETCH_WEATHER_LL,HISTORY} from "../Actions/index";
 const initialState={
     regData:{},
+    weatherData:[],
+    history:[],
     token: localStorage.getItem("token"),
     id:localStorage.getItem("id"),
+    name:localStorage.getItem("name")
 }
 export default function reducer(state=initialState,action){
-    console.log(action.payload)
     switch(action.type){
         case SIGN_UP:
             return{
                 ...state,
                 regData:{...state.regData,...action.payload},
                 token:action.payload.token,
-                id:action.payload.result._id
+                id:action.payload.result._id,
+                name:action.payload.name
             }
         case LOGIN:
             return{
@@ -26,7 +29,22 @@ export default function reducer(state=initialState,action){
                 id:null
         
                     }
+        case FETCH_WEATHER:
+            return{
+                ...state,
+                weatherData:action.payload
+            }
+        case FETCH_WEATHER_LL:
+            return{
+                ...state,
+                weatherData:action.payload
+            }
+        case HISTORY:
+            return{
+                ...state,
+                history:action.payload
+            }
         default :
-        return state
+            return state
     }
 }
