@@ -1,11 +1,15 @@
 import React,{useEffect} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
+import { useHistory } from 'react-router'
 import {requesthistory} from "../Thunk"
+import "./Style.css"
 const History = () => {
     const dispatch = useDispatch()
+    const history=useHistory()
     const historyData=useSelector(state=>state.reducer.history)
+    const name=useSelector(state=>state.reducer.name)
     useEffect(() => {
-       dispatch(requesthistory())
+       dispatch(requesthistory(name))
         
     },[dispatch])
     const historyFields = historyData.length > 0 ? Object.keys(historyData[0]) : [];
@@ -13,6 +17,7 @@ const History = () => {
     return (
         <div>
             <center>
+                <input type="button" value="Back To Home" onClick={()=>history.push("/")}/>
                 <h1>History</h1>
                     <h1>
                 {!historyData[0] ? (

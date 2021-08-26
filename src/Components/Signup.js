@@ -6,7 +6,6 @@ const Signup = () => {
     const [signupForm,setSignupForm]=useState({name:'',email: '',city:'',password: ''})
     const dispatch = useDispatch()
     const history=useHistory()
-    const {name,email,city,password}=signupForm;
     const handleInputData=(e)=>
     {
         let {name,value}=e.target;

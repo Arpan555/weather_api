@@ -6,8 +6,7 @@ const historySchema = mongoose.Schema({
   },
   date:{
       type: Date,
-      required:true,
-      default: Date.now
+      required:true
     },
   time: {
        type: String, 

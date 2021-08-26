@@ -1,5 +1,5 @@
 import axios from "axios"
-import {signup,login,fetchweather,fetchbylonlat,history} from "./Redux/Actions/actions"
+import {signup,login,fetchweather,fetchbylonlat,history,defaultcity} from "./Redux/Actions/actions"
 const request=axios.create({
     baseURL:"http://localhost:8000",
 })
@@ -21,7 +21,6 @@ export const requestlogin=(state)=>{
         try{
             const loginData= await request.post("/login",state)
             dispatch(login(loginData.data));
-        
         }catch(err)
         {
             console.log(err);
@@ -59,12 +58,24 @@ export const requestcurrentlocation=(state)=>{
 export const requesthistory=(state)=>{
     return async(dispatch)=>{
         try{
-            const historyData=await request.get("/history",state)
+            console.log(state)
+            const historyData=await request.get(`/history/${state}`)
             dispatch(history(historyData.data))
         }catch(error)
         {
             console.log(error)
         }
             
+    }
+}
+export const requestonlycity=(state)=>{
+    return async(dispatch)=>{
+        try {
+            console.log(state)
+            const weatherCityData=await request.get(`/city/${state}`)
+            dispatch(defaultcity(weatherCityData.data))
+        } catch (error) {
+            
+        }
     }
 }

@@ -1,13 +1,14 @@
 import React,{useState} from 'react'
 import { useHistory,Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import {requestlogin} from "../Thunk" 
+import {requestcurrentlocation} from "../Thunk"
 const Login = () => {
+     const token =useSelector(state=>state.reducer.token)
      const [loginForm,setLoginForm]=useState({email: '', password: ''})
      const dispatch = useDispatch()
      const history=useHistory()
-     const {email,password}=loginForm;
-    const handleInputData=(e)=>
+     const handleInputData=(e)=>
     {
       let {name,value}=e.target;
       setLoginForm({...loginForm,[name]:value})
@@ -15,11 +16,21 @@ const Login = () => {
     }
     
     const handleSubmit=(e)=>
-    {
-        e.preventDefault()
+    {   e.preventDefault()
         dispatch(requestlogin(loginForm));
-        history.push("/dashboard")
-    }
+        
+        if(token) {
+          history.push("/dashboard")
+          }
+          navigator.geolocation.getCurrentPosition((pos)=>
+          {
+            const {latitude,longitude}=pos.coords
+            dispatch(requestcurrentlocation({latitude,longitude}))
+          })
+        }
+    
+      
+      
   return (
     <div>
       <center>

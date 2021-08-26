@@ -13,8 +13,7 @@ try {
         }
     const hashedPassword = await bcrypt.hash(password, 12);
     const result = await register.create({name, email,city ,password: hashedPassword  });
-    const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
-    res.status(201).json({ result, token });
+    res.status(201).json({result});
     }catch (error) {
      res.status(500).json({ message: "Something went wrong" });
 }
@@ -45,6 +44,4 @@ const signin = async (req, res) => {
     }
   };
   
- 
-
 module.exports={signup,signin}

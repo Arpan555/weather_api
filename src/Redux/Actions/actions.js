@@ -1,16 +1,19 @@
-import { SIGN_UP,LOGIN,LOGOUT,FETCH_WEATHER,FETCH_WEATHER_LL,HISTORY } from "./index";
+import { SIGN_UP,LOGIN,LOGOUT,FETCH_WEATHER,
+FETCH_WEATHER_LL,
+HISTORY,DEFAULT_CITY } from "./index";
 
-export const signup=(payload)=>({
-    type:SIGN_UP,
-    payload,
-})
+export const signup=(payload)=>{
+    localStorage.setItem("city",payload.result.city)
+    return{
+        type:SIGN_UP,
+        payload
+    }
+}
 export const login=(payload)=>{
-        console.log(payload.token)
-        console.log(payload.result._id)
         localStorage.setItem("token",payload.token)
         localStorage.setItem("id",payload.result._id)
         localStorage.setItem("name",payload.result.name)
-    
+        
     return{
     type:LOGIN,
     payload,
@@ -38,6 +41,13 @@ export const fetchbylonlat=(payload)=>{
 export const history=(payload)=>{
     return{
         type: HISTORY,
+        payload
+    }
+}
+
+export const defaultcity=(payload)=>{
+    return{
+        type:DEFAULT_CITY,
         payload
     }
 }

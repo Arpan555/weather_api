@@ -32,5 +32,17 @@ const fetchweatherLL =async (req,res)=>{
         res.status(500).send({message:error})
      }
 }
+const fetchweatherCurCity=async (req,res)=>{
+    const {city_name}=req.params
+    const url2=ROOT_URL+`?q=${city_name}&appid=${API_KEY}`
+    try {
+        const defCityData=await axios.get(`${url2}`)
+        const jsonData=JSON.stringify(defCityData.data)
+        res.status(200).json(jsonData)
+    } catch (error) {
+        res.status(500).send({message:error})
+    }
 
-module.exports={fetchweather,fetchweatherLL}
+}
+
+module.exports={fetchweather,fetchweatherLL,fetchweatherCurCity}
