@@ -22,7 +22,7 @@ try {
 const signin = async (req, res) => {
     
     const { email, password } = req.body;
-    const date=new Date()
+    const date=new Date().toDateString()
     const time=new Date().toTimeString()
     try {
         const oldUser = await register.findOne({ email });

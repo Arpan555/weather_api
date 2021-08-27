@@ -4,10 +4,10 @@ import { useHistory } from 'react-router'
 import {requesthistory} from "../Thunk"
 import "./Style.css"
 const History = () => {
-    const dispatch = useDispatch()
-    const history=useHistory()
     const historyData=useSelector(state=>state.reducer.history)
     const name=useSelector(state=>state.reducer.name)
+    const dispatch = useDispatch()
+    const history=useHistory()
     useEffect(() => {
        dispatch(requesthistory(name))
         

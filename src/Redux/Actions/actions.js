@@ -1,6 +1,6 @@
 import { SIGN_UP,LOGIN,LOGOUT,FETCH_WEATHER,
 FETCH_WEATHER_LL,
-HISTORY,DEFAULT_CITY } from "./index";
+HISTORY,DEFAULT_CITY,SET_LATITUDE_LONGITUDE } from "./index";
 
 export const signup=(payload)=>{
     localStorage.setItem("city",payload.result.city)
@@ -48,6 +48,13 @@ export const history=(payload)=>{
 export const defaultcity=(payload)=>{
     return{
         type:DEFAULT_CITY,
+        payload
+    }
+}
+export const setlatitudelongitude=(payload)=>{
+    localStorage.setItem("cordinate",JSON.stringify(payload))
+    return{
+        type:SET_LATITUDE_LONGITUDE,
         payload
     }
 }

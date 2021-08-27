@@ -1,4 +1,4 @@
-import { SIGN_UP,LOGIN,LOGOUT,FETCH_WEATHER,FETCH_WEATHER_LL,HISTORY,DEFAULT_CITY} from "../Actions/index";
+import { SIGN_UP,LOGIN,LOGOUT,FETCH_WEATHER,FETCH_WEATHER_LL,HISTORY,DEFAULT_CITY, SET_LATITUDE_LONGITUDE} from "../Actions/index";
 const initialState={
     regData:{},
     weatherData:[],
@@ -6,7 +6,9 @@ const initialState={
     token: localStorage.getItem("token"),
     id:localStorage.getItem("id"),
     name:localStorage.getItem("name"),
-    city:localStorage.getItem("city")
+    city:localStorage.getItem("city"),
+    cordinate:JSON.parse(localStorage.getItem("cordinate"))
+    
   }
 export default function reducer(state=initialState,action){
     console.log(action.payload)
@@ -30,7 +32,8 @@ export default function reducer(state=initialState,action){
                 ...state,
                 token:null,
                 id:null,
-                name:null
+                name:null,
+                cordinates:null
                     }
         case FETCH_WEATHER:
             return{
@@ -46,13 +49,18 @@ export default function reducer(state=initialState,action){
         case DEFAULT_CITY:{
             return{
                 ...state,
-                weatherData:action.payload
+                weatherData:action.payload,
             }
         }
         case HISTORY:
             return{
                 ...state,
                 history:action.payload
+            }
+        case SET_LATITUDE_LONGITUDE:
+            return{
+                ...state,
+                cordinate:{...state.cordinates,...action.payload}
             }
         
         default :

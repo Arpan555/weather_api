@@ -45,12 +45,25 @@ export const requestcurrentlocation=(state)=>{
     return async(dispatch)=>{
         const {latitude,longitude}=state
         try {
-            const fetchDataByLL= await request.get(`/curdata?lon=${longitude}&lat=${latitude}`)
+            const fetchDataByLL= await request.get(`/curcity?lon=${longitude}&lat=${latitude}`)
             dispatch(fetchbylonlat(fetchDataByLL.data));
     
         } catch (error) 
         {
             console.log(error)    
+        }
+    }
+}
+
+
+export const requestonlycity=(state)=>{
+    return async(dispatch)=>{
+        try {
+            const weatherCityData=await request.get(`/defcity?city=${state}`)
+            console.log(weatherCityData)
+            dispatch(defaultcity(weatherCityData.data))
+        } catch (error) {
+            
         }
     }
 }
@@ -66,16 +79,5 @@ export const requesthistory=(state)=>{
             console.log(error)
         }
             
-    }
-}
-export const requestonlycity=(state)=>{
-    return async(dispatch)=>{
-        try {
-            console.log(state)
-            const weatherCityData=await request.get(`/city/${state}`)
-            dispatch(defaultcity(weatherCityData.data))
-        } catch (error) {
-            
-        }
     }
 }

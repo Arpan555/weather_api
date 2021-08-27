@@ -3,7 +3,7 @@ const weather_router=express.Router()
 const {fetchweather,fetchweatherLL,fetchweatherCurCity} =require("../Controllers/weather.js")
 
 weather_router.get(`/data`,fetchweather)
-weather_router.get(`/curdata`,fetchweatherLL)
-weather_router.get(`/city/:city_name`,fetchweatherCurCity)
+weather_router.get(`/curcity`,fetchweatherLL)
+weather_router.get(`/defcity`,fetchweatherCurCity)
 
 module.exports=weather_router
