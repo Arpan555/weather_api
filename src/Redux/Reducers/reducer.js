@@ -11,7 +11,6 @@ const initialState={
     
   }
 export default function reducer(state=initialState,action){
-    console.log(action.payload)
     switch(action.type){
         case SIGN_UP:
             return{
